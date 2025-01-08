@@ -1,0 +1,309 @@
+ARM GAS  C:\Users\36525\AppData\Local\Temp\cckPMwvM.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.arch armv7e-m
+   3              		.fpu fpv4-sp-d16
+   4              		.eabi_attribute 27, 1
+   5              		.eabi_attribute 28, 1
+   6              		.eabi_attribute 20, 1
+   7              		.eabi_attribute 21, 1
+   8              		.eabi_attribute 23, 3
+   9              		.eabi_attribute 24, 1
+  10              		.eabi_attribute 25, 1
+  11              		.eabi_attribute 26, 1
+  12              		.eabi_attribute 30, 1
+  13              		.eabi_attribute 34, 1
+  14              		.eabi_attribute 18, 4
+  15              		.file	"init.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.file 1 "Core/Src/init.c"
+  20              		.section	.text.GPIO_Ini_1,"ax",%progbits
+  21              		.align	1
+  22              		.global	GPIO_Ini_1
+  23              		.syntax unified
+  24              		.thumb
+  25              		.thumb_func
+  27              	GPIO_Ini_1:
+  28              	.LFB130:
+   1:Core/Src/init.c **** #include "init.h"
+   2:Core/Src/init.c **** 
+   3:Core/Src/init.c **** // ==================== GPIO 初始化函数 ====================
+   4:Core/Src/init.c **** 
+   5:Core/Src/init.c **** // GPIO_Ini_1：初始化 GPIOB 的 LED 引脚（PB0, PB7, PB14）
+   6:Core/Src/init.c **** void GPIO_Ini_1(void)
+   7:Core/Src/init.c **** {
+  29              		.loc 1 7 1 view -0
+  30              		.cfi_startproc
+  31              		@ args = 0, pretend = 0, frame = 0
+  32              		@ frame_needed = 0, uses_anonymous_args = 0
+  33              		@ link register save eliminated.
+  34 0000 30B4     		push	{r4, r5}
+  35              	.LCFI0:
+  36              		.cfi_def_cfa_offset 8
+  37              		.cfi_offset 4, -8
+  38              		.cfi_offset 5, -4
+   8:Core/Src/init.c ****     // 使能 GPIOB 和 GPIOC 的时钟
+   9:Core/Src/init.c ****     SET_BIT(RCC_GPIO_EN, RCC_GPIOB_EN | RCC_GPIOC_EN);
+  39              		.loc 1 9 5 view .LVU1
+  40 0002 334A     		ldr	r2, .L3
+  41 0004 D2F83038 		ldr	r3, [r2, #2096]
+  42 0008 43F00603 		orr	r3, r3, #6
+  43 000c C2F83038 		str	r3, [r2, #2096]
+  10:Core/Src/init.c **** 
+  11:Core/Src/init.c ****     // ==================== 配置 LED1 (PB0) ====================
+  12:Core/Src/init.c ****     // 设置 PB0 为输出模式
+  13:Core/Src/init.c ****     GPIOB_MODER &= ~(0x03 << (0 * 2)); // 清除 MODER0[1:0]
+  44              		.loc 1 13 5 view .LVU2
+  45 0010 304B     		ldr	r3, .L3+4
+ARM GAS  C:\Users\36525\AppData\Local\Temp\cckPMwvM.s 			page 2
+
+
+  46 0012 D3F80014 		ldr	r1, [r3, #1024]
+  47              		.loc 1 13 17 is_stmt 0 view .LVU3
+  48 0016 21F00301 		bic	r1, r1, #3
+  49 001a C3F80014 		str	r1, [r3, #1024]
+  14:Core/Src/init.c ****     GPIOB_MODER |= GPIOB_MODE_PIN0_OUT;
+  50              		.loc 1 14 5 is_stmt 1 view .LVU4
+  51              		.loc 1 14 17 is_stmt 0 view .LVU5
+  52 001e 41F00101 		orr	r1, r1, #1
+  53 0022 C3F80014 		str	r1, [r3, #1024]
+  15:Core/Src/init.c **** 
+  16:Core/Src/init.c ****     // 设置 PB0 为推挽输出
+  17:Core/Src/init.c ****     GPIOB_OTYPER &= ~(0x01 << 0); // OT0 = 0
+  54              		.loc 1 17 5 is_stmt 1 view .LVU6
+  55 0026 D3F80444 		ldr	r4, [r3, #1028]
+  56              		.loc 1 17 18 is_stmt 0 view .LVU7
+  57 002a 24F00102 		bic	r2, r4, #1
+  58 002e C3F80424 		str	r2, [r3, #1028]
+  18:Core/Src/init.c **** 
+  19:Core/Src/init.c ****     // 设置 PB0 的速度为中速
+  20:Core/Src/init.c ****     GPIOB_OSPEEDR &= ~(0x03 << (0 * 2)); // 清除 OSPEEDR0[1:0]
+  59              		.loc 1 20 5 is_stmt 1 view .LVU8
+  60 0032 D3F80824 		ldr	r2, [r3, #1032]
+  61              		.loc 1 20 19 is_stmt 0 view .LVU9
+  62 0036 22F00302 		bic	r2, r2, #3
+  63 003a C3F80824 		str	r2, [r3, #1032]
+  21:Core/Src/init.c ****     GPIOB_OSPEEDR |= GPIOB_OSPEED_PIN0_MID;
+  64              		.loc 1 21 5 is_stmt 1 view .LVU10
+  65              		.loc 1 21 19 is_stmt 0 view .LVU11
+  66 003e 42F00102 		orr	r2, r2, #1
+  67 0042 C3F80824 		str	r2, [r3, #1032]
+  22:Core/Src/init.c **** 
+  23:Core/Src/init.c ****     // 设置 PB0 为无上下拉
+  24:Core/Src/init.c ****     GPIOB_PUPDR &= ~(0x03 << (0 * 2)); // 清除 PUPDR0[1:0]
+  68              		.loc 1 24 5 is_stmt 1 view .LVU12
+  69 0046 D3F80C04 		ldr	r0, [r3, #1036]
+  70              		.loc 1 24 17 is_stmt 0 view .LVU13
+  71 004a 20F00300 		bic	r0, r0, #3
+  72 004e C3F80C04 		str	r0, [r3, #1036]
+  25:Core/Src/init.c ****     GPIOB_PUPDR |= GPIOB_PUPDR_PIN0_NOPUPD;
+  73              		.loc 1 25 5 is_stmt 1 view .LVU14
+  26:Core/Src/init.c **** 
+  27:Core/Src/init.c ****     // 初始化 LED1 为关闭
+  28:Core/Src/init.c ****     GPIOB_BSRR = GPIOB_BSRR_PIN0_RESET;
+  74              		.loc 1 28 5 view .LVU15
+  75              		.loc 1 28 16 is_stmt 0 view .LVU16
+  76 0052 4FF48035 		mov	r5, #65536
+  77 0056 C3F81854 		str	r5, [r3, #1048]
+  29:Core/Src/init.c **** 
+  30:Core/Src/init.c ****     // ==================== 配置 LED2 (PB7) ====================
+  31:Core/Src/init.c ****     // 设置 PB7 为输出模式
+  32:Core/Src/init.c ****     GPIOB_MODER &= ~(0x03 << (7 * 2)); // 清除 MODER7[1:0]
+  78              		.loc 1 32 5 is_stmt 1 view .LVU17
+  79              		.loc 1 32 17 is_stmt 0 view .LVU18
+  80 005a 21F44041 		bic	r1, r1, #49152
+  81 005e C3F80014 		str	r1, [r3, #1024]
+  33:Core/Src/init.c ****     GPIOB_MODER |= GPIOB_MODE_PIN7_OUT;
+  82              		.loc 1 33 5 is_stmt 1 view .LVU19
+ARM GAS  C:\Users\36525\AppData\Local\Temp\cckPMwvM.s 			page 3
+
+
+  83              		.loc 1 33 17 is_stmt 0 view .LVU20
+  84 0062 41F48041 		orr	r1, r1, #16384
+  85 0066 C3F80014 		str	r1, [r3, #1024]
+  34:Core/Src/init.c **** 
+  35:Core/Src/init.c ****     // 设置 PB7 为推挽输出
+  36:Core/Src/init.c ****     GPIOB_OTYPER &= ~(0x01 << 7); // OT7 = 0
+  86              		.loc 1 36 5 is_stmt 1 view .LVU21
+  87              		.loc 1 36 18 is_stmt 0 view .LVU22
+  88 006a 24F08104 		bic	r4, r4, #129
+  89 006e C3F80444 		str	r4, [r3, #1028]
+  37:Core/Src/init.c **** 
+  38:Core/Src/init.c ****     // 设置 PB7 的速度为中速
+  39:Core/Src/init.c ****     GPIOB_OSPEEDR &= ~(0x03 << (7 * 2)); // 清除 OSPEEDR7[1:0]
+  90              		.loc 1 39 5 is_stmt 1 view .LVU23
+  91              		.loc 1 39 19 is_stmt 0 view .LVU24
+  92 0072 22F44042 		bic	r2, r2, #49152
+  93 0076 C3F80824 		str	r2, [r3, #1032]
+  40:Core/Src/init.c ****     GPIOB_OSPEEDR |= GPIOB_OSPEED_PIN7_MID;
+  94              		.loc 1 40 5 is_stmt 1 view .LVU25
+  95              		.loc 1 40 19 is_stmt 0 view .LVU26
+  96 007a 42F48042 		orr	r2, r2, #16384
+  97 007e C3F80824 		str	r2, [r3, #1032]
+  41:Core/Src/init.c **** 
+  42:Core/Src/init.c ****     // 设置 PB7 为无上下拉
+  43:Core/Src/init.c ****     GPIOB_PUPDR &= ~(0x03 << (7 * 2)); // 清除 PUPDR7[1:0]
+  98              		.loc 1 43 5 is_stmt 1 view .LVU27
+  99              		.loc 1 43 17 is_stmt 0 view .LVU28
+ 100 0082 20F44040 		bic	r0, r0, #49152
+ 101 0086 C3F80C04 		str	r0, [r3, #1036]
+  44:Core/Src/init.c ****     GPIOB_PUPDR |= GPIOB_PUPDR_PIN7_NOPUPD;
+ 102              		.loc 1 44 5 is_stmt 1 view .LVU29
+  45:Core/Src/init.c **** 
+  46:Core/Src/init.c ****     // 初始化 LED2 为关闭
+  47:Core/Src/init.c ****     GPIOB_BSRR = GPIOB_BSRR_PIN7_RESET;
+ 103              		.loc 1 47 5 view .LVU30
+ 104              		.loc 1 47 16 is_stmt 0 view .LVU31
+ 105 008a 4FF40005 		mov	r5, #8388608
+ 106 008e C3F81854 		str	r5, [r3, #1048]
+  48:Core/Src/init.c **** 
+  49:Core/Src/init.c ****     // ==================== 配置 LED3 (PB14) ====================
+  50:Core/Src/init.c ****     // 设置 PB14 为输出模式
+  51:Core/Src/init.c ****     GPIOB_MODER &= ~(0x03 << (14 * 2)); // 清除 MODER14[1:0]
+ 107              		.loc 1 51 5 is_stmt 1 view .LVU32
+ 108              		.loc 1 51 17 is_stmt 0 view .LVU33
+ 109 0092 21F04051 		bic	r1, r1, #805306368
+ 110 0096 C3F80014 		str	r1, [r3, #1024]
+  52:Core/Src/init.c ****     GPIOB_MODER |= GPIOB_MODE_PIN14_OUT;
+ 111              		.loc 1 52 5 is_stmt 1 view .LVU34
+ 112              		.loc 1 52 17 is_stmt 0 view .LVU35
+ 113 009a 41F08051 		orr	r1, r1, #268435456
+ 114 009e C3F80014 		str	r1, [r3, #1024]
+  53:Core/Src/init.c **** 
+  54:Core/Src/init.c ****     // 设置 PB14 为推挽输出
+  55:Core/Src/init.c ****     GPIOB_OTYPER &= ~(0x01 << 14); // OT14 = 0
+ 115              		.loc 1 55 5 is_stmt 1 view .LVU36
+ 116              		.loc 1 55 18 is_stmt 0 view .LVU37
+ 117 00a2 24F48044 		bic	r4, r4, #16384
+ARM GAS  C:\Users\36525\AppData\Local\Temp\cckPMwvM.s 			page 4
+
+
+ 118 00a6 C3F80444 		str	r4, [r3, #1028]
+  56:Core/Src/init.c **** 
+  57:Core/Src/init.c ****     // 设置 PB14 的速度为中速
+  58:Core/Src/init.c ****     GPIOB_OSPEEDR &= ~(0x03 << (14 * 2)); // 清除 OSPEEDR14[1:0]
+ 119              		.loc 1 58 5 is_stmt 1 view .LVU38
+ 120              		.loc 1 58 19 is_stmt 0 view .LVU39
+ 121 00aa 22F04052 		bic	r2, r2, #805306368
+ 122 00ae C3F80824 		str	r2, [r3, #1032]
+  59:Core/Src/init.c ****     GPIOB_OSPEEDR |= GPIOB_OSPEED_PIN14_MID;
+ 123              		.loc 1 59 5 is_stmt 1 view .LVU40
+ 124              		.loc 1 59 19 is_stmt 0 view .LVU41
+ 125 00b2 42F08052 		orr	r2, r2, #268435456
+ 126 00b6 C3F80824 		str	r2, [r3, #1032]
+  60:Core/Src/init.c **** 
+  61:Core/Src/init.c ****     // 设置 PB14 为无上下拉
+  62:Core/Src/init.c ****     GPIOB_PUPDR &= ~(0x03 << (14 * 2)); // 清除 PUPDR14[1:0]
+ 127              		.loc 1 62 5 is_stmt 1 view .LVU42
+ 128              		.loc 1 62 17 is_stmt 0 view .LVU43
+ 129 00ba 20F04050 		bic	r0, r0, #805306368
+ 130 00be C3F80C04 		str	r0, [r3, #1036]
+  63:Core/Src/init.c ****     GPIOB_PUPDR |= GPIOB_PUPDR_PIN14_NOPUPD;
+ 131              		.loc 1 63 5 is_stmt 1 view .LVU44
+  64:Core/Src/init.c **** 
+  65:Core/Src/init.c ****     // 初始化 LED3 为关闭
+  66:Core/Src/init.c ****     GPIOB_BSRR = GPIOB_BSRR_PIN14_RESET;
+ 132              		.loc 1 66 5 view .LVU45
+ 133              		.loc 1 66 16 is_stmt 0 view .LVU46
+ 134 00c2 4FF08042 		mov	r2, #1073741824
+ 135 00c6 C3F81824 		str	r2, [r3, #1048]
+  67:Core/Src/init.c **** }
+ 136              		.loc 1 67 1 view .LVU47
+ 137 00ca 30BC     		pop	{r4, r5}
+ 138              	.LCFI1:
+ 139              		.cfi_restore 5
+ 140              		.cfi_restore 4
+ 141              		.cfi_def_cfa_offset 0
+ 142 00cc 7047     		bx	lr
+ 143              	.L4:
+ 144 00ce 00BF     		.align	2
+ 145              	.L3:
+ 146 00d0 00300240 		.word	1073885184
+ 147 00d4 00000240 		.word	1073872896
+ 148              		.cfi_endproc
+ 149              	.LFE130:
+ 151              		.section	.text.GPIO_Ini_2,"ax",%progbits
+ 152              		.align	1
+ 153              		.global	GPIO_Ini_2
+ 154              		.syntax unified
+ 155              		.thumb
+ 156              		.thumb_func
+ 158              	GPIO_Ini_2:
+ 159              	.LFB131:
+  68:Core/Src/init.c **** 
+  69:Core/Src/init.c **** // GPIO_Ini_2：初始化 GPIOC 的按钮引脚（PC6, PC13）
+  70:Core/Src/init.c **** void GPIO_Ini_2(void)
+  71:Core/Src/init.c **** {
+ 160              		.loc 1 71 1 is_stmt 1 view -0
+ARM GAS  C:\Users\36525\AppData\Local\Temp\cckPMwvM.s 			page 5
+
+
+ 161              		.cfi_startproc
+ 162              		@ args = 0, pretend = 0, frame = 0
+ 163              		@ frame_needed = 0, uses_anonymous_args = 0
+ 164              		@ link register save eliminated.
+  72:Core/Src/init.c ****     // ==================== 配置 按钮1 (PC13) 和 按钮2 (PC6) 为输入模式 ===============
+  73:Core/Src/init.c ****     // 设置 PC13 为输入模式
+  74:Core/Src/init.c ****     GPIOC_MODER &= ~(0x03 << (13 * 2)); // 清除 MODER13[1:0]
+ 165              		.loc 1 74 5 view .LVU49
+ 166 0000 0A4B     		ldr	r3, .L6
+ 167 0002 D3F80028 		ldr	r2, [r3, #2048]
+ 168              		.loc 1 74 17 is_stmt 0 view .LVU50
+ 169 0006 22F04062 		bic	r2, r2, #201326592
+ 170 000a C3F80028 		str	r2, [r3, #2048]
+  75:Core/Src/init.c **** 
+  76:Core/Src/init.c ****     // 设置 PC6 为输入模式
+  77:Core/Src/init.c ****     GPIOC_MODER &= ~(0x03 << (6 * 2)); // 清除 MODER6[1:0]
+ 171              		.loc 1 77 5 is_stmt 1 view .LVU51
+ 172              		.loc 1 77 17 is_stmt 0 view .LVU52
+ 173 000e 22F44052 		bic	r2, r2, #12288
+ 174 0012 C3F80028 		str	r2, [r3, #2048]
+  78:Core/Src/init.c **** 
+  79:Core/Src/init.c ****     // ==================== 配置 上下拉电阻 ====================
+  80:Core/Src/init.c ****     // 设置 PC13 为无上下拉
+  81:Core/Src/init.c ****     GPIOC_PUPDR &= ~(0x03 << (13 * 2));
+ 175              		.loc 1 81 5 is_stmt 1 view .LVU53
+ 176 0016 D3F80C28 		ldr	r2, [r3, #2060]
+ 177              		.loc 1 81 17 is_stmt 0 view .LVU54
+ 178 001a 22F04062 		bic	r2, r2, #201326592
+ 179 001e C3F80C28 		str	r2, [r3, #2060]
+  82:Core/Src/init.c ****     GPIOC_PUPDR |= (0x00 << (13 * 2)); // 无上下拉
+ 180              		.loc 1 82 5 is_stmt 1 view .LVU55
+  83:Core/Src/init.c **** 
+  84:Core/Src/init.c ****     // 设置 PC6 为无上下拉
+  85:Core/Src/init.c ****     GPIOC_PUPDR &= ~(0x03 << (6 * 2));
+ 181              		.loc 1 85 5 view .LVU56
+ 182              		.loc 1 85 17 is_stmt 0 view .LVU57
+ 183 0022 22F44052 		bic	r2, r2, #12288
+ 184 0026 C3F80C28 		str	r2, [r3, #2060]
+  86:Core/Src/init.c ****     GPIOC_PUPDR |= (0x00 << (6 * 2)); // 无上下拉
+ 185              		.loc 1 86 5 is_stmt 1 view .LVU58
+  87:Core/Src/init.c **** }
+ 186              		.loc 1 87 1 is_stmt 0 view .LVU59
+ 187 002a 7047     		bx	lr
+ 188              	.L7:
+ 189              		.align	2
+ 190              	.L6:
+ 191 002c 00000240 		.word	1073872896
+ 192              		.cfi_endproc
+ 193              	.LFE131:
+ 195              		.text
+ 196              	.Letext0:
+ 197              		.file 2 "C:/SysGCC/arm-eabi/arm-none-eabi/include/machine/_default_types.h"
+ 198              		.file 3 "C:/SysGCC/arm-eabi/arm-none-eabi/include/sys/_stdint.h"
+ARM GAS  C:\Users\36525\AppData\Local\Temp\cckPMwvM.s 			page 6
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 init.c
+C:\Users\36525\AppData\Local\Temp\cckPMwvM.s:21     .text.GPIO_Ini_1:00000000 $t
+C:\Users\36525\AppData\Local\Temp\cckPMwvM.s:27     .text.GPIO_Ini_1:00000000 GPIO_Ini_1
+C:\Users\36525\AppData\Local\Temp\cckPMwvM.s:146    .text.GPIO_Ini_1:000000d0 $d
+C:\Users\36525\AppData\Local\Temp\cckPMwvM.s:152    .text.GPIO_Ini_2:00000000 $t
+C:\Users\36525\AppData\Local\Temp\cckPMwvM.s:158    .text.GPIO_Ini_2:00000000 GPIO_Ini_2
+C:\Users\36525\AppData\Local\Temp\cckPMwvM.s:191    .text.GPIO_Ini_2:0000002c $d
+
+NO UNDEFINED SYMBOLS
